@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TasksType, Todolist} from "./Todolist";
 import {v1} from "uuid";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 
 export type FilterValuesType = "All" | "Active" | "Completed"
 
@@ -41,6 +41,10 @@ function App() {
             {id: v1(), title: 'Java', isDone: false},
         ]
     })
+
+    const updateTask = (todolistId: string,taskId: string, updatedTitle: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t=>t.id === taskId ? {...t, title: updatedTitle} : t)})
+    }
 
 
     let addTask = (todolistId: string, newTaskTitle: string) => {
@@ -104,6 +108,7 @@ function App() {
                               changeTaskStatus={changeTaskStatus}
                               filter={tl.filter}
                               removeTodolist={removeTodolist}
+                              updateTask={updateTask}
                     />
                 )
 
